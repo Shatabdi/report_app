@@ -1,0 +1,12 @@
+<%= form_for @event, :html => { :multipart => true } do |f| %>
+	<%= f.collection_select :category_id, @categories, :id, :name, :prompt => "select category" %>
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+	<%= f.label :address %>
+	<%= f.text_field :address %>
+	<%= f.text_area :description %>
+	<%= f.fields_for :event_images do |builder| %>
+		<%= builder.file_field :image %> 
+	<% end %>
+	<%= f.submit %> 
+<% end %>

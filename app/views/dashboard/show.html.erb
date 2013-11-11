@@ -1,0 +1,7 @@
+<%= form_tag(dashboard_index_path, :method => :post, :remote => true) do %>
+	<% @categories.each do |category| %>
+		<%= category.name %>
+		<%= check_box_tag 'user_preferred_category[]', category.id, @preferred_categories.include?(category), :id => category.id %>
+	<% end %>
+	<%= submit_tag 'Go' %>
+<% end %>
