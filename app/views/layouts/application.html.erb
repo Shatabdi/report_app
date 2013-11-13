@@ -50,9 +50,17 @@
           <div class="container-fluid nav-collapse">
           	<div class = "user_info">
 		          <% unless current_user.blank? %>
+
+                <% if current_user.facebook_access_token.blank? %>
+                  <%= link_to "Sign in with Facebook", omniauth_authorize_path(resource_name, 'facebook')%> |
+                <% elsif  current_user.facebook_access_token.blank? %> 
+                  <%= link_to "Sign in with Twitter", omniauth_authorize_path(resource_name, 'twitter') %> |
+                <% else %>
+                <% end %>
 		          	<%= link_to 'add event', new_event_path %> |
 								<%= current_user.name %> | 
 								<%= link_to 'logout ', destroy_user_session_path, :method => :delete %>
+
 							<% end %>
 						</div>
             <ul class="nav">

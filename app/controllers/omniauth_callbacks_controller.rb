@@ -4,29 +4,29 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook 
 
 		auth = request.env["omniauth.auth"]
-		@ip_address= request.ip
-		unless auth.credentials.token.blank? 
-
-		 	@user = User.where(:email => auth.info.email).first
-		 	if @user.blank?
-
-			 	 @new_user = User.create(:email => auth.info.email,       
-			 	    :password => Devise.friendly_token[0,20],
-			 	  	:name => auth.extra.raw_info.name, :ip_address => @ip_address)
-			 	 @new_user.create_facebook_access_token(:uid => auth.uid,
-			 	  :access_token => auth.credentials.token)
-			 	 sign_in @new_user, :event => :authentication
+		if @current_user.blank?
+			
+			unless auth.credentials.token.blank? 
+				@ip_address= request.ip
+			 	@user = User.where(:email => auth.info.email).first
+			 	if @user.blank?
+			 		@new_user = User.create(:email => auth.info.email,       
+				 	    :password => Devise.friendly_token[0,20],
+				 	  	:name => auth.extra.raw_info.name, :ip_address => @ip_address)
+				 	 @new_user.create_facebook_access_token(:uid => auth.uid,
+				 	  :access_token => auth.credentials.token)
+				 	 sign_in @new_user, :event => :authentication
+				else
+					@user.facebook_access_token.update_attributes(:access_token => auth.credentials.token)
+					sign_in @user, :event => :authentication
+				end
 			else
-
-				@user.facebook_access_token.update_attributes(:access_token => auth.credentials.token)
-			 	sign_in @user, :event => :authentication
-
+				flash[:alert] = 'You need to permit the app to access your facebook credential'
 			end
 
 		else
-
-		 		flash[:alert] = 'You need to permit the app to access your facebook credential'
-
+			@current_user.create_facebook_access_token(:uid => @auth.uid,
+			:access_token => auth.credentials.token)
 		end
 		redirect_to root_path
 
@@ -35,27 +35,35 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	def twitter
 
 		auth = request.env["omniauth.auth"]
-		unless auth.credentials.token.blank? 
+		if current_user.blank?
+			unless auth.credentials.token.blank? 
 
-			@check_uid = TwitterAccessToken.where(:uid => auth.uid).first
-	  	if @check_uid.blank?
+				@check_uid = TwitterAccessToken.where(:uid => auth.uid).first
+		  	if @check_uid.blank?
 
-		 		@name = auth.extra.raw_info.name 
-	  		@access_token = auth.credentials.token
-	  		@secret = auth.credentials.secret
-	  		@ip_address= request.ip
-	  		@uid =  auth.uid
-				@user = User.new
-		 		@user.build_twitter_access_token
-		 	
-	  	else
+			 		@name = auth.extra.raw_info.name 
+		  		@access_token = auth.credentials.token
+		  		@secret = auth.credentials.secret
+		  		@ip_address= request.ip
+		  		@uid =  auth.uid
+					@user = User.new
+			 		@user.build_twitter_access_token
+			 		render 'set_email'
+			 	
+		  	else
 
-			 	@user.twitter_access_token.update_attributes(:access_token => auth.credentials.token, :secret => auth.credentials.secret)
-			 	sign_in @user, :event => :authentication
+				 	@check_uid.update_attributes(:access_token => auth.credentials.token, :secret => auth.credentials.secret)
+				 	sign_in 	@check_uid.user, :event => :authentication
+				 	redirect_to root_path
 
-	 		end
+				end
 
-		end
+			end
+		else
+		@current_user.create_twitter_access_token(:uid => @auth.uid,
+				:access_token => auth.credentials.token, :secret => auth.credentials.secret)
+		redirect_to root_path
+	end
 
 	end
 

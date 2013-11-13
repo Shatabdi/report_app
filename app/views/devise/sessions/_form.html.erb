@@ -1,4 +1,6 @@
 <h2>Sign in</h2>
-<%= link_to "Sign in with Facebook", omniauth_authorize_path(resource_name, 'facebook')%>
-
-<%= link_to "Sign in with Twitter", omniauth_authorize_path(resource_name, 'twitter') %>
+<center>
+	<%= link_to image_tag("facebook-login-button.png", :size => "300x300"), omniauth_authorize_path(resource_name, 'facebook')%><br/>
+	<%= link_to  image_tag("twitter.jpeg", :size => "300x300"), omniauth_authorize_path(resource_name, 
+	'twitter') %>
+</center>

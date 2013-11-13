@@ -1,9 +1,15 @@
 class Event < ActiveRecord::Base
   attr_accessible :category_id, :description, :title, :user_id, 
   	:event_images_attributes, :address
+  validates :title, :presence => true, :length => { :maximum => 10 }
+  validates :description, :presence => true, :length => { :maximum => 30 }
+  validates :address, :presence => true,  :length => { :maximum => 20 }
+  # validates :lat, :presence => {:message => "please enter a valid address"} 
+  # validates :lan, :presence => {:message => "please enter a valid address"} 
   geocoded_by :address,
    :latitude => :lat, :longitude => :lan
-  after_validation :geocode
+  before_validation :geocode
+  # has_many :preferred_users, :through => :user_favourites, :source => :user
   belongs_to :category
   belongs_to :user
   has_many :event_images

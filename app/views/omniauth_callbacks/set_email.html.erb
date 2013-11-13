@@ -1,0 +1,21 @@
+<% if @user.errors.any? %>
+<h1> ERRORS </h1>
+	<ul>
+		<% @user.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<%= form_for @user, :url =>  user_registration_path, :method => :post do |f| %>
+	<%= f.text_field :email %>
+	<%= f.hidden_field :name, value: @name %>
+	<%= f.hidden_field :ip_address, value: @ip_address %>
+	<%= f.fields_for :twitter_access_token do |builder| %>
+		<%= builder.hidden_field :access_token, value: @access_token %>
+		<%= builder.hidden_field :secret, value: @secret %>
+		<%= builder.hidden_field :uid, value: @uid %>
+	<% end %>
+	<%= f.submit %>
+<% end %>
+

@@ -16,7 +16,7 @@ class RegistrationsController < Devise::RegistrationsController
       sign_in @user, :event => :authentication
       redirect_to dashboard_index_path
     else
-      render 'omniauth_callbacks/twitter'
+      render 'omniauth_callbacks/set_email'
     end
    
   end

@@ -11,13 +11,17 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :lat, :lon, :ip_address, :password, :password_confirmation, :remember_me, :twitter_access_token_attributes
   validates :email, :presence => true,  :uniqueness => {:case_sensitive => false}
   validates_format_of :email, :with => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i
+ 
   geocoded_by :ip_address,
   :latitude => :lat, :longitude => :lon
   before_save :geocode
-
   has_one :facebook_access_token
   has_one :twitter_access_token
   has_many :events
+  has_many :event_approvals
+  has_many :approved_events, :through => :event_approvals, :source => :event
+  has_many :user_favourites
+  has_many :favourite_events, :through => :user_favourites, :source => :event
   has_many :user_preferred_categories
   has_many :preferred_categories, :through => :user_preferred_categories, :source => :category
   has_many :preferred_events, :through => :preferred_categories, :source => :events

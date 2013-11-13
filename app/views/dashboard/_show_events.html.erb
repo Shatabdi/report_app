@@ -8,8 +8,10 @@
 			 :class => my_class), event_path(event) %>
 			<%= event.title %>
 			<%= event.user.name %>
-			<%= button_to "favourite",event_favourites_path(event.id), :method => :post, 
-				:remote => true %>
+			<% if current_user.favourite_events.include?(event) %>
+				<%= button_to "favourite",event_favourites_path(event.id), :method => :post, 
+					:remote => true %>
+			<% end %>
 		</div>
 	<% end %>
 </div>
