@@ -9,7 +9,6 @@ class Event < ActiveRecord::Base
   geocoded_by :address,
    :latitude => :lat, :longitude => :lan
   before_validation :geocode
-  # has_many :preferred_users, :through => :user_favourites, :source => :user
   belongs_to :category
   belongs_to :user
   has_many :event_images
