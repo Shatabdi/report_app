@@ -2,6 +2,6 @@
 
 <% if @near_users.include?(current_user) %>
 	<% if @current_user.approved_events.include?(@event) %>
-		<%= link_to 'approve',  event_approve_index_path(@event), :method => :post, :remote => true %>
+		<%= link_to 'approve', event_approve_index_path(@event), :method => :post, :remote => true %>
 	<% end %>
 <% end %>
