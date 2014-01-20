@@ -15,22 +15,44 @@
 //= require twitter/bootstrap
 //= require_tree .
 
-$(function(){
-		var total = $("#total_events").val()
-		
-	$(window).scroll(function(){
+$(document).ready(function(){
 
-		if($(document).height()==$(window).scrollTop()+$(window).height()){
-			var ctr = $("#counter").val()
-			if(ctr*10 < total){
-			 	$.ajax({
-				type: "get",
-				url: '/dashboard',
-				data: { counter: ctr },
-				dataType: 'script'
-				});
+	$(function(){
+			var total = $("#total_events").val()
+			
+		$(window).scroll(function(){
+
+			if($(document).height()==$(window).scrollTop()+$(window).height()){
+				var ctr = $("#counter").val()
+				if(ctr*10 < total){
+				 	$.ajax({
+					type: "get",
+					url: '/dashboard',
+					data: { counter: ctr },
+					dataType: 'script'
+					});
+				}
 			}
-		}
+		});
 	});
+
+	var clickOnPopupLink = function(){
+	  $('body').on('click', '.static-popup-link', function(){
+	    $("#myModal").html("loading..");
+	    $('#myModal').modal('show');
+	  });
+	}
+	clickOnPopupLink();
+
+
+	$('#tiles li').wookmark({
+		autoResize: true, // This will auto-update the layout when the browser window is resized.
+		container: $('#tiles'), // Optional, used for some extra CSS styling
+		offset: 4, // Optional, the distance between grid items
+		itemWidth: 210, // Optional, the width of a grid item
+		verticalOffset: 4,
+		outerOffset: 6
+	});
+
 });
 

@@ -7,14 +7,10 @@ class EventsController < ApplicationController
 	end
 
 	def create
-
+		@a = false
 		@event = current_user.events.new(params[:event])
 		if @event.save
-			redirect_to root_path
-		else 
-			@categories = Category.all
-			@event.event_images.build
-			render 'new'
+			@a = true
 		end
 	end
 

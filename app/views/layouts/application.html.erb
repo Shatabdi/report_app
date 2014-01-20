@@ -12,6 +12,7 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
     <![endif]-->
 
+    <%= javascript_include_tag "jquery.wookmark.js" %>
     <%= stylesheet_link_tag "application", :media => "all" %>
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
@@ -57,7 +58,8 @@
                   <%= link_to "Sign in with Twitter", omniauth_authorize_path(resource_name, 'twitter') %> |
                 <% else %>
                 <% end %>
-		          	<%= link_to 'add event', new_event_path %> |
+		          	<%= link_to 'add event', new_event_path, :data=>{:toggle => "modal"}, 
+                :class => 'static-popup-link', :remote => true %> |
 								<%= current_user.name %> | 
 								<%= link_to 'logout ', destroy_user_session_path, :method => :delete %>
 
@@ -84,6 +86,9 @@
       </footer>
 
     </div> <!-- /container -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby=
+    "myModalLabel" aria-hidden="true">
+    </div><!-- /.modal -->
 
   </body>
 </html>

@@ -46,4 +46,16 @@ EventApp::Application.configure do
   config.site_url = "http://192.168.8.118:3000"
 
   config.default_ip_address = '111.93.167.67' 
+  #mailer configuration
+  config.action_mailer.default_url_options = { :host => '192.168.8.118:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => '192.168.8.118:3000',
+    :user_name            => 'lipashruma@gmail.com',
+    :password             => 'shatabdi12',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  }
+
 end
