@@ -1,7 +1,0 @@
-<% if @a  %>
-	$('#myModal').modal('hide')
- 	$('#display_content').append("<%= j render '/events/add' %> ");
-<% else %>
-	$('#myModal').html("<%= j render '/event/new_form' %>");
-<% end %>
-

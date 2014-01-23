@@ -2,10 +2,10 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  config.omniauth :facebook, Rails.application.config.fb_appid, 
-  Rails.application.config.fb_app_secret, :scope => 'user_about_me, 
-  publish_stream, offline_access,publish_actions, email, read_friendlists ', 
-  :display => 'popup', :iframe => true
+  # config.omniauth :facebook, Rails.application.config.fb_appid, 
+  # Rails.application.config.fb_app_secret, :scope => 'user_about_me, 
+  # publish_stream, offline_access,publish_actions, email, read_friendlists ', 
+  # :display => 'popup', :iframe => true
 
    config.omniauth :twitter,  Rails.application.config.twitter_appid, 
   Rails.application.config.twitter_app_secret

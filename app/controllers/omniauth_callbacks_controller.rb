@@ -1,36 +1,36 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   prepend_before_filter { request.env["devise.skip_timeout"] = true }
 
-  def facebook 
+ #  def facebook 
 
-		auth = request.env["omniauth.auth"]
-		if @current_user.blank?
+	# 	auth = request.env["omniauth.auth"]
+	# 	if @current_user.blank?
 			
-			unless auth.credentials.token.blank? 
-				@ip_address= request.ip
-			 	@user = User.where(:email => auth.info.email).first
-			 	if @user.blank?
-			 		@new_user = User.create(:email => auth.info.email,       
-				 	    :password => Devise.friendly_token[0,20],
-				 	  	:name => auth.extra.raw_info.name, :ip_address => @ip_address)
-				 	 @new_user.create_facebook_access_token(:uid => auth.uid,
-				 	  :access_token => auth.credentials.token)
-				 	 sign_in @new_user, :event => :authentication
-				else
-					@user.facebook_access_token.update_attributes(:access_token => auth.credentials.token)
-					sign_in @user, :event => :authentication
-				end
-			else
-				flash[:alert] = 'You need to permit the app to access your facebook credential'
-			end
+	# 		unless auth.credentials.token.blank? 
+	# 			@ip_address= request.ip
+	# 		 	@user = User.where(:email => auth.info.email).first
+	# 		 	if @user.blank?
+	# 		 		@new_user = User.create(:email => auth.info.email,       
+	# 			 	    :password => Devise.friendly_token[0,20],
+	# 			 	  	:name => auth.extra.raw_info.name, :ip_address => @ip_address)
+	# 			 	 @new_user.create_facebook_access_token(:uid => auth.uid,
+	# 			 	  :access_token => auth.credentials.token)
+	# 			 	 sign_in @new_user, :event => :authentication
+	# 			else
+	# 				@user.facebook_access_token.update_attributes(:access_token => auth.credentials.token)
+	# 				sign_in @user, :event => :authentication
+	# 			end
+	# 		else
+	# 			flash[:alert] = 'You need to permit the app to access your facebook credential'
+	# 		end
 
-		else
-			@current_user.create_facebook_access_token(:uid => @auth.uid,
-			:access_token => auth.credentials.token)
-		end
-		redirect_to root_path
+	# 	else
+	# 		@current_user.create_facebook_access_token(:uid => @auth.uid,
+	# 		:access_token => auth.credentials.token)
+	# 	end
+	# 	redirect_to root_path
 
-	end
+	# end
 
 	def twitter
 
