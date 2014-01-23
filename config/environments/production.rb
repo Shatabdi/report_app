@@ -64,4 +64,28 @@ EventApp::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # facebook api credentials
+  config.fb_appid = '1386278934947486'
+  config.fb_app_secret = '86e67c633b00b099e4abc0d82ba792fb'
+  config.site_url = "http://192.168.8.118:3000"
+
+  # twitter api credentials
+  config.twitter_appid = 'cbp2V88zkLtlGhjfUBGlQ'
+  config.twitter_app_secret = 'fRnkJMvliz6lLsqW5LY1byYaKlDd2oSTIkonndaA'
+  config.site_url = "http://192.168.8.118:3000"
+
+  config.default_ip_address = '111.93.167.67' 
+  #mailer configuration
+  config.action_mailer.default_url_options = { :host => '192.168.8.118:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => '192.168.8.118:3000',
+    :user_name            => 'lipashruma@gmail.com',
+    :password             => 'shatabdi12',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  }
+
 end
