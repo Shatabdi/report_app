@@ -2,11 +2,16 @@ class DashboardController < ApplicationController
 
 	def index
 
-		@counter = params['counter'].to_i || 0
+		# @counter = params['counter'].to_i || 0
 		preferred_categories = current_user.user_preferred_categories
-		@events =  preferred_categories.blank? ? Event.includes(:event_images, :user).order(id: :desc).limit(10).offset(@counter*10) : current_user.preferred_events.includes(:event_images, :user).order('id desc').limit(10).offset(@counter*10) 
-		@total_events = (preferred_categories.blank? ? Event.count : current_user.preferred_events.count) if @counter == 0
-		@counter += 1
+		@events =  preferred_categories.blank? ? 
+		Event.includes(:event_images, :user).order(id: :desc)
+		.paginate(:page => params[:page], :per_page => 10)
+		 : 
+		 current_user.preferred_events.includes(:event_images, :user)
+		 .order('id desc').paginate(:page => params[:page], :per_page => 10)
+		
+		
 	
 	end
 

@@ -1,22 +1,37 @@
-<% if @event.errors.any? %>
-<h1> ERRORS </h1>
-	<ul>
-		<% @event.errors.full_messages.each do |message| %>
-			<li><%= message %></li>
-		<% end %>
-	</ul>
-<% end %>
-
-
-<%= form_for @event, :html => { :multipart => true }, :remote => true do |f| %>
-	<%= f.collection_select :category_id, @categories, :id, :name, :prompt => "select category" %>
-	<%= f.label :title %>
-	<%= f.text_field :title %>
-	<%= f.label :address %>
-	<%= f.text_field :address %>
-	<%= f.text_area :description %>
-	<%= f.fields_for :event_images do |builder| %>
-		<%= builder.file_field :image %> 
-	<% end %>
-	<%= f.submit %> 
-<% end %>
+<div class="modal-dialog">
+  <div class="modal-content">
+	  <%= form_for @event, :multipart => true, :remote => true do |f| %>
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      <h4 class="modal-title">Add Event</h4>
+	    </div>
+	    <div class="modal-body">
+	    	<div class="form-group">
+			    <%= f.collection_select :category_id, @categories, :id, :name, :prompt => "select category" %>
+			  </div>
+		  	<div class="form-group">
+			    <%= f.label :title %>
+			    <%= f.text_field :title, :class => "form-control", :placeholder => "Enter Title" %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :address %>
+			    <%= f.text_field :address, :class => "form-control", :placeholder => "Enter Address" %>
+			  </div>
+			 	<div class="form-group">
+			    <%= f.label :description %>
+			    <%= f.text_field :description, :class => "form-control", :placeholder => "Enter description" %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.fields_for :event_images do |builder| %>
+			    	<label>Select Image</label>
+						<%= builder.file_field :image %> 
+					<% end %>
+				</div>
+	    </div>
+	    <div class="modal-footer">
+	    	<%= f.submit "Create Event", :type => "button", :class => "btn btn-primary create_event" %>
+	      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    </div>
+	  <% end %>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

@@ -11,11 +11,12 @@
 				<div class = "line"></div>
 				Name:<%= event.user.name %><br/>
 				<div class = "line"></div>
-				<% if current_user.favourite_events.include?(event) %>
+				<% unless current_user.favourite_events.include?(event) %>
 					<%= button_to "favourite",event_favourites_path(event.id), :method => :post, :remote => true %>
 				<% end %>
 			<% end %>
 		</li>
 	<% end %>
 </ul>
+<%= will_paginate @events %>
 

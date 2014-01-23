@@ -56,3 +56,7 @@
 .show_tiles{
 	margin-top: 50px;
 }
+
+.hidden{
+	display: none;
+}

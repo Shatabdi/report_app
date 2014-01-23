@@ -1,2 +1,14 @@
-$("#counter").val(<%= j @counter.to_s %>);
-$('#load_event').append("<%= j render '/dashboard/show_events' %> ");
+$('#tiles').append("<%= j render '/dashboard/show_events' %>");
+<% if @events.next_page %>
+	$("#tiles li").wookmark({
+	  autoResize: true,
+	  container: $("#tiles"),
+	  offset: 4,
+	  itemWidth: 210,
+	  verticalOffset: 4,
+	  outerOffset: 6
+	});
+	$('.pagination').replaceWith('<%= j will_paginate(@events) %>');
+<% else %>
+	$('.pagination').remove();
+<% end %>

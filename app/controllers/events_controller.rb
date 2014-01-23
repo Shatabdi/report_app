@@ -7,11 +7,9 @@ class EventsController < ApplicationController
 	end
 
 	def create
-		@a = false
 		@event = current_user.events.new(params[:event])
-		if @event.save
-			@a = true
-		end
+		 @flag = @event.save
+		render :layout => false
 	end
 
 	def show
